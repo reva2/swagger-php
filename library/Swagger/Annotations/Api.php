@@ -72,6 +72,11 @@ class Api extends AbstractAnnotation
 
     public function validate()
     {
+        $target = $this->_context->getRootContext()->getTarget();
+        if ((null !== $target) && (null !== $this->targets) && (!in_array($target, $this->targets))) {
+            return false;
+        }
+
         $operations = array();
         foreach ($this->operations as $operation) {
             if ($operation->validate()) {

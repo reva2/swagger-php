@@ -57,6 +57,11 @@ abstract class AbstractAnnotation
     public $_context;
 
     /**
+     * @var array
+     */
+    public $targets;
+
+    /**
      * Declarative mapping of Annotation types to properties
      * @var array
      */

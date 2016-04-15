@@ -1,6 +1,9 @@
 
 Changelog
-----------
+---------
+
+## 1.1.0
+* Support splitting documentation by targets 
 
 ## 1.0.0
 

@@ -96,6 +96,11 @@ class Resource extends AbstractAnnotation
 
     public function validate()
     {
+        $target = $this->_context->getRootContext()->getTarget();
+        if ((null !== $target) && (null !== $this->targets) && (!in_array($target, $this->targets))) {
+            return false;
+        }
+
         if (empty($this->resourcePath)) {
             Logger::warning('@SWG\Resource() is missing "resourcePath" in '.$this->_context);
             return false;
@@ -106,6 +111,7 @@ class Resource extends AbstractAnnotation
                 $this->swaggerVersion = null;
             }
         }
+
         $validApis = array();
         foreach ($this->apis as $api) {
             $append = true;

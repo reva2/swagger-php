@@ -90,6 +90,11 @@ class Model extends AbstractAnnotation
 
     public function validate()
     {
+        $target = $this->_context->getRootContext()->getTarget();
+        if ((null !== $target) && (null !== $this->targets) && (!in_array($target, $this->targets))) {
+            return false;
+        }
+
         $properties = array();
         $required = $this->required ?: array();
         foreach ($this->properties as $property) {

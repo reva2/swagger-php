@@ -125,6 +125,11 @@ abstract class DataType extends AbstractAnnotation
 
     public function validate()
     {
+        $target = $this->_context->getRootContext()->getTarget();
+        if ((null !== $target) && (null !== $this->targets) && (!in_array($target, $this->targets))) {
+            return false;
+        }
+
         if (is_string($this->required)) {
             $required = filter_var($this->required, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
             if ($required === null) {

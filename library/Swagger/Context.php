@@ -57,15 +57,24 @@ class Context {
     private $_parent;
 
     /**
+     * Current target
+     *
+     * @var string|null
+     */
+    private $target;
+
+    /**
      * @param array $properties new properties for this context.
      * @param Context $parent The parent context
+     * @param string $target Current target
      */
-    public function __construct($properties = array(), $parent = null)
+    public function __construct($properties = array(), $parent = null, $target = null)
     {
         foreach ($properties as $property => $value) {
             $this->$property = $value;
         }
         $this->_parent = $parent;
+        $this->target = $target;
     }
 
     /**
@@ -103,6 +112,13 @@ class Context {
             return $this->_parent->getRootContext();
         }
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getTarget() {
+        return $this->target;
     }
 
     /**

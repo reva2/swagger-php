@@ -60,16 +60,24 @@ class Swagger
     protected $processors;
 
     /**
+     * @var string|null
+     */
+    protected $target;
+
+    /**
      *
      * @param string|array $paths Project root folder
      * @param string|array $excludePath Exclude paths
-     * )
+     * @param string $target
      */
-    public function __construct($paths = array(), $excludePath = array())
+    public function __construct($paths = array(), $excludePath = array(), $target = null)
     {
         if (is_string($paths)) {
             $paths = array($paths);
         }
+
+        $this->target = $target;
+
         foreach ($paths as $path) {
             $this->scan($path, $excludePath);
         }
@@ -239,7 +247,7 @@ class Swagger
         }
 
         foreach ($this->getFiles($path, $excludePaths) as $filename) {
-            $this->processParser(new Parser($this->getProcessors(), $filename));
+            $this->processParser(new Parser($this->getProcessors(), $filename, $this->target));
         }
         $this->processResults();
         return $this;
@@ -264,7 +272,7 @@ class Swagger
             throw new \Exception('No PHP code detected, T_OPEN_TAG("<?php") not found in '.$context);
         }
 
-        $parser = new Parser($this->getProcessors());
+        $parser = new Parser($this->getProcessors(), null, $this->target);
         $parser->parseContents($contents, $context);
         $this->processParser($parser);
         $this->processResults();

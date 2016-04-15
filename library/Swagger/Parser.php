@@ -81,13 +81,20 @@ class Parser
     private $processors;
 
     /**
+     * @var string
+     */
+    protected $target;
+
+    /**
      *
      * @param ProcessorInterface[] $processors
      * @param string $filename
+     * @param string $target
      */
-    public function __construct($processors, $filename = null)
+    public function __construct($processors, $filename = null, $target = null)
     {
         $this->processors = $processors;
+        $this->target = $target;
 
         AnnotationRegistry::registerAutoloadNamespace(__NAMESPACE__, dirname(__DIR__));
         if ($filename !== null) {
@@ -178,7 +185,7 @@ class Parser
     public function parseFile($filename)
     {
         $tokens = token_get_all(file_get_contents($filename));
-        return $this->parseTokens($tokens, new Context(array('filename' => $filename)));
+        return $this->parseTokens($tokens, new Context(array('filename' => $filename), null, $this->target));
     }
 
     /**

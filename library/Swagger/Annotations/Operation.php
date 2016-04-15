@@ -149,6 +149,11 @@ class Operation extends AbstractAnnotation
 
     public function validate()
     {
+        $target = $this->_context->getRootContext()->getTarget();
+        if ((null !== $target) && (null !== $this->targets) && (!in_array($target, $this->targets))) {
+            return false;
+        }
+
         if (count($this->_partials) !== 0) {
             return true;
         }

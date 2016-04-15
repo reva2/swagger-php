@@ -53,6 +53,7 @@ try {
         'suffix' => '.{format}',
         'help' => false,
         'debug' => false,
+        'target' => null
     );
     $aliases = array(
         'o' => 'output',
@@ -61,6 +62,7 @@ try {
         'b' => 'bootstrap',
         'v' => 'version',
         'h' => 'help',
+        't' => 'target'
     );
     $needsArgument = array(
         'output',
@@ -72,6 +74,7 @@ try {
         'default-api-version',
         'default-swagger-version',
         'api-doc-template',
+        'target'
     );
     $paths = array();
     // Parse cli arguments
@@ -122,6 +125,8 @@ Usage: swagger /path/to/project [--output /path/to/docs] ...
                          ex: --exclude vendor:library/Zend:library/Foo
   -b, --bootstrap     Bootstrap php file(s) for defining constants, etc.
                          ex: --bootstrap autoload.php:config/contants.php
+  -t, --target        Exclude data that not suitable for specified target
+                         ex: --target admin
 
   --default-base-path        Provide a default basePath for the resources
   --default-api-version      Provide a default apiVersion for the resources
