@@ -179,7 +179,7 @@ EOF;
         }
         echo '[', $type, '] ', $entry, PHP_EOL;
     };
-    $swagger = new \Swagger\Swagger($projectPaths, $excludePaths);
+    $swagger = new \Swagger\Swagger($projectPaths, $excludePaths, $options['target']);
 
     $resourceList = $swagger->getResourceList(array(
         'output' => 'array',
