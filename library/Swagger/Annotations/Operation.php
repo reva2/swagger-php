@@ -161,11 +161,22 @@ class Operation extends AbstractAnnotation
             Logger::notice('Required field "nickname" is missing for "'.$this->identity().'" in '.$this->_context);
         }
         Swagger::checkDataType($this->type, $this->_context);
-        foreach ($this->parameters as $parameter) {
-            if ($parameter->validate() == false) {
+
+        if (count($this->parameters) > 0) {
+            $validParameters = array();
+            foreach ($this->parameters as $parameter) {
+                if ($parameter->validate()) {
+                    $validParameters[] = $parameter;
+                }
+            }
+            $this->parameters = $validParameters;
+
+            if (count($this->parameters) === 0 && count($this->_partials) === 0) {
+                Logger::notice('Operation "'. $this->_context . '" doesn\'t have any valid parameters');
                 return false;
             }
         }
+
         Items::validateContainer($this);
         Produces::validateContainer($this);
         Consumes::validateContainer($this);

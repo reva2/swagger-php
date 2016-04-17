@@ -77,6 +77,7 @@ class Api extends AbstractAnnotation
             return false;
         }
 
+        $opsCount = count($this->operations);
         $operations = array();
         foreach ($this->operations as $operation) {
             if ($operation->validate()) {
@@ -84,7 +85,7 @@ class Api extends AbstractAnnotation
             }
         }
         $this->operations = $operations;
-        if (count($this->operations) === 0 && count($this->_partials) === 0) {
+        if (count($this->operations) === 0 && $opsCount > 1 && count($this->_partials) === 0) {
             Logger::notice('Api "'.$this->path.'" doesn\'t have any valid operations');
             return false;
         }
